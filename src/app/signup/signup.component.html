@@ -1,0 +1,151 @@
+<div class="back">
+    <div class="registration-form">
+
+      <div class="toggle-buttons">
+        <button (click)="selectForm('signup')" [class.active]="isSignUpMode">Sign Up</button>
+        <button (click)="selectForm('signin')" [class.active]="!isSignUpMode">Sign In</button>
+      </div>
+      
+      <header>
+        <h1 *ngIf="isSignUpMode">Sign Up</h1>
+        <h1 *ngIf="!isSignUpMode">Sign In</h1>
+        <p>{{ isSignUpMode ? 'Fill in all information' : 'Please enter your login details' }}</p>
+      </header>
+  
+      <!-- Sign Up Form -->
+      <form [formGroup]="signupForm" *ngIf="isSignUpMode" [@fadeInOut] (ngSubmit)="completeSignup()">
+        <div class="input-section email-section" [ngClass]="{ 'fold-up': showUsernameSection }">
+          <input
+            formControlName="email"
+            class="email"
+            type="email"
+            placeholder="ENTER YOUR E-MAIL HERE"
+            (keyup)="onEmailChange()"
+            autocomplete="off"
+          />
+          <div class="animated-button">
+            <span class="icon-paper-plane" [ngClass]="{ 'next': emailFilled }">
+              <i class="fa fa-envelope"></i>
+            </span>
+            <span class="next-button email" [class.disabled]="!emailFilled" (click)="proceedToUsername()">
+              <i class="fa fa-arrow-up"></i>
+            </span>
+          </div>
+        </div>
+
+         <!-- username section -->
+        <div class="input-section username-section" [ngClass]="{ 'folded': !showUsernameSection, 'fold-up': showPasswordSection }">
+          <input
+            formControlName="username"
+            class="username"
+            type="text"
+            placeholder="ENTER YOUR USERNAME HERE"
+            (keyup)="onUsernameChange()"
+            autocomplete="off"
+          />
+          <div class="animated-button">
+            <span class="icon-user" [ngClass]="{ 'next': usernameFilled }">
+              <i class="fa fa-user"></i>
+            </span>
+            <span class="next-button username" [class.disabled]="!usernameFilled" (click)="proceedToPassword()">
+              <i class="fa fa-arrow-up"></i>
+            </span>
+          </div>
+        </div>
+  
+        <div class="input-section password-section" [ngClass]="{ 'folded': !showPasswordSection, 'fold-up': showRepeatPasswordSection }">
+          <input
+            formControlName="password"
+            class="password"
+            type="password"
+            placeholder="ENTER YOUR PASSWORD HERE"
+            (keyup)="onPasswordChange()"
+          />
+          <div class="animated-button">
+            <span class="icon-lock" [ngClass]="{ 'next': passwordFilled }">
+              <i class="fa fa-lock"></i>
+            </span>
+            <span class="next-button password" (click)="proceedToRepeatPassword()">
+              <i class="fa fa-arrow-up"></i>
+            </span>
+          </div>
+        </div>
+  
+        <div class="input-section repeat-password-section" [ngClass]="{ 'folded': !showRepeatPasswordSection, 'fold-up': showSuccessMessage }">
+          <input
+            formControlName="repeatPassword"
+            class="repeat-password"
+            type="password"
+            placeholder="REPEAT YOUR PASSWORD HERE"
+            (keyup)="onRepeatPasswordChange()"
+          />
+          <div class="animated-button">
+            <span class="icon-repeat-lock" [ngClass]="{ 'next': repeatPasswordFilled }">
+              <i class="fa fa-lock"></i>
+            </span>
+            <span class="next-button repeat-password" (click)="completeSignup()">
+              <i class="fa fa-paper-plane"></i>
+            </span>
+          </div>
+        </div>
+  
+        <div class="success" [ngClass]="{ 'active': showSuccessMessage }" [style.marginTop.px]="successMarginTop">
+          <p>ACCOUNT CREATED</p>
+        </div>
+      </form>
+  
+      <!-- Sign In Form -->
+      <form [formGroup]="signinForm" *ngIf="!isSignUpMode" [@fadeInOut] (ngSubmit)="completeSignin()">
+        <div class="input-section email-section" [ngClass]="{ 'fold-up': showPasswordSection }">
+          <input
+            formControlName="emailOrUsername"
+            class="email-or-username"
+            type="text"
+            placeholder="ENTER YOUR E-MAIL OR USERNAME HERE"
+            (keyup)="onEmailOrUsernameChange()"
+            autocomplete="off"
+          />
+          <div class="animated-button">
+            <span class="icon-paper-plane" [ngClass]="{ 'next': emailFilled }">
+              <i class="fa fa-envelope"></i>
+            </span>
+            <span class="next-button email" [class.disabled]="!emailFilled" (click)="proceedToPassword()">
+              <i class="fa fa-arrow-up"></i>
+            </span>
+          </div>
+        </div>
+      
+      
+
+        <div class="input-section password-section" [ngClass]="{ 'folded': !showPasswordSection, 'fold-up': showLoggedInMessage }">
+          <input
+            formControlName="password"
+            class="password"
+            type="password"
+            placeholder="ENTER YOUR PASSWORD HERE"
+            (keyup)="onPasswordChange()"
+          />
+          <div class="animated-button">
+            <span class="icon-lock" [ngClass]="{ 'next': passwordFilled }">
+              <i class="fa fa-lock"></i>
+            </span>
+            <span class="next-button password" (click)="completeSignin()">
+              <i class="fa fa-arrow-up"></i>
+            </span>
+          </div>
+        </div>
+
+        <div class="success" [ngClass]="{ 'active': showLoggedInMessage }" [style.marginTop.px]="successLogInMarginTop">
+          <p>LOGGED IN</p>
+        </div>
+      </form>
+      
+      
+  
+      <!-- Toggle between Sign In and Sign Up -->
+      <p (click)="selectForm('signin')" class="toggle-link">
+        {{ isSignUpMode ? 'Already have an account? Sign In' : 'Don\'t have an account? Sign Up' }}
+      </p>
+    </div>
+  </div>
+  

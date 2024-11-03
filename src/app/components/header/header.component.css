@@ -1,0 +1,195 @@
+.header {
+  padding: 10px;
+  margin: 0;
+  box-sizing: border-box;
+  z-index: 10000; /* Increase the z-index so the header stays on top */
+  position: relative; /* Ensure it's positioned relative to the rest of the page */
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  flex-grow: 1; /* Allows the logo to expand and center itself */
+  display: flex;
+  justify-content: center; /* Ensure the logo is centered within the flex-grow */
+}
+
+.logo svg {
+  width: 250px;
+  height: auto;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 30px; /* Add spacing between nav items */
+}
+
+.nav li {
+  position: relative; /* Needed to position the dropdown */
+}
+
+.nav a {
+  text-decoration: none;
+  color: #333; /* Dark text color */
+  font-weight: bold;
+  padding: 10px 20px;
+  display: inline-block;
+}
+
+/* Default hidden state for the dropdown */
+.nav-item .dropdown {
+  display: none; /* Hide the dropdown by default */
+  position: absolute;
+  left: 0;
+  top: 100%; /* Position the dropdown just below the parent menu item */
+  background-color: #333;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  padding: 15px;
+  border-radius: 5px;
+}
+
+/* Show dropdown when hovering over the nav item */
+.nav-item:hover .dropdown {
+  display: block; /* Show the dropdown when hovered */
+}
+
+
+/* Dropdown menu item styling */
+.dropdown ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.dropdown ul li {
+  margin-bottom: 10px;
+}
+
+.dropdown ul li a {
+  text-decoration: none;
+  color: #fff;
+  font-size: 14px;
+}
+
+.dropdown ul li a:hover {
+  color: #007bff; /* Optional hover effect for dropdown items */
+}
+
+.actions {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+}
+
+.actions .btn {
+  display: flex;
+  gap: 20px;
+}
+
+.logo svg:hover {
+  filter: drop-shadow(0 0 5px #003BFC); /* Glowing yellow shadow */
+  transform: scale(1.1); /* Slightly enlarge the logo */
+}
+
+/* Dark theme adjustments */
+:host-context(.dark-theme) {
+  background-color: #333;
+  color: white;
+}
+
+:host-context(.dark-theme) a,
+:host-context(.dark-theme) button {
+  color: white;
+}
+
+:host-context(.dark-theme) select {
+  background-color: #444;
+  color: white;
+}
+
+/* Dark Mode */
+body.dark-theme .svg-fill {
+  fill: white; /* Change fill to white for dark mode */
+  stroke: white; /* Change stroke to white for dark mode */
+}
+
+lucide-icon:hover{
+  filter: drop-shadow(0 0 5px #003BFC); /* Glowing yellow shadow */
+  transform: scale(1.1); /* Slightly enlarge the logo */
+  cursor: pointer;
+}
+
+.actions .nav-item {
+  position: relative; /* Needed for positioning the dropdown */
+}
+
+/* Dropdown menu for icons in actions section */
+.actions .dropdown {
+  display: none; /* Initially hidden */
+  position: absolute;
+  top: 100%; /* Position the dropdown directly below the icon */
+  right: 0; /* Align it to the right side */
+  background-color: #333;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional shadow for dropdown */
+  z-index: 1000;
+  padding: 15px;
+  border-radius: 5px; /* Rounded corners for better UI */
+  min-width: 150px; /* Ensure a minimum width */
+}
+
+/* Show dropdown on hover */
+.actions .nav-item:hover .dropdown {
+  display: block; /* Make dropdown visible on hover */
+}
+
+/* Ensure dropdown items are listed vertically */
+.actions .dropdown ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.actions .dropdown ul li {
+  margin-bottom: 10px; /* Space between items */
+}
+
+.actions .dropdown ul li a {
+  text-decoration: none;
+  color: #fff; /* Text color */
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.actions .dropdown ul li a:hover {
+  color: #007bff; /* Optional hover color for dropdown items */
+}
+
+/* Icon Hover Effects for Sign Up and Shopping Cart */
+.actions lucide-icon:hover, li:hover {
+  filter: drop-shadow(0 0 5px #003BFC); /* Glowing shadow effect */
+  transform: scale(1.1); /* Slightly enlarge the icon on hover */
+  cursor: pointer; /* Pointer cursor for better UX */
+}
+
+.actions ul {
+  list-style: none;
+  display: flex;
+  gap: 30px;
+  padding: 0px;
+}
+
+.actions .dropdown ul {
+  display: block;
+}

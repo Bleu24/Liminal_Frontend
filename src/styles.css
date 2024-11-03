@@ -1,0 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
+
+* {
+    font-family: "Oswald", sans-serif;
+    box-sizing: border-box;
+}
+
+/* Default light theme */
+body,html {
+    background-color: white;
+    color: black;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+  }
+  
+  /* Dark theme styles */
+  .dark-theme {
+    background-color: #121212;
+    color: white;
+  }
+  
+  /* Light theme styles (if needed for explicit light mode) */
+  .light-theme {
+    background-color: white;
+    color: black;
+  }
+
+
+  
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

@@ -1,0 +1,6 @@
+#canvasContainer {
+    width: 100%;
+    height: calc(100vh - 86.8px); /* Fill the height below your header */
+    box-sizing: border-box;
+  }
+  

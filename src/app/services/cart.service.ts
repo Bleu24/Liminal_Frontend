@@ -66,6 +66,22 @@ addToCart(username: string, productId: number, quantity: number = 1): Observable
   );
 }
 
+addToOrder(username: string, productId: number, quantity: number = 1): Observable<any> {
+  // Ensure the order data is serialized correctly
+  const orderData = JSON.stringify({ productId, quantity });
+
+  // Set headers to indicate the content type is JSON
+  const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+
+  return this.http.post(`http://localhost:8080/api/orders/add`, orderData, { headers }).pipe(
+    tap(() => {
+      console.log(`Order placed for product ID: ${productId}`);
+    }),
+    catchError(this.handleError('addToOrder', 'Failed to add product to order. Please try again later.'))
+  );
+}
+
+
   // Remove item from cart for specific user and update cart state
   removeFromCart(username: string, productId: number): Observable<any> {
     return this.http.delete(`${this.baseUrl}/remove/${productId}`).pipe(
@@ -73,6 +89,17 @@ addToCart(username: string, productId: number, quantity: number = 1): Observable
       catchError(this.handleError('removeFromCart', 'Failed to remove item from cart. Please try again later.'))
     );
   }
+
+  // Remove item from cart for specific user and update cart state
+  removeFromOrder(username: string, productId: number): Observable<any> {
+    return this.http.delete(`http://localhost:8080/api/orders/remove/${productId}`).pipe(
+      tap(() => {
+        console.log(`Item removed from order for product ID: ${productId}`)
+      }),
+      catchError(this.handleError('removeFromCart', 'Failed to remove item from order. Please try again later.'))
+    );
+  }
+
 
   // Fetch all cart items for the current user
 // Fetch all cart items for the current user and update local cartItems map

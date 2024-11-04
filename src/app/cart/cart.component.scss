@@ -68,3 +68,60 @@
     text-align: right;
   }
   
+  .modal {
+    display: flex;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .modal-content {
+    max-width: 600px; /* Match the cart container width */
+    margin: 15% auto;
+    padding: 20px;
+    border-radius: 20px; /* Keep the rounded edges */
+    background-color: #000000; /* Black background */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Depth effect */
+    max-height: 70vh; /* Set max height for the content area */
+    overflow-y: auto; /* Enable vertical scroll only for content */
+  }
+  
+  .ordered-items-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-height: 400px; /* Optional: Set desired max height for scrolling within this container */
+    overflow-y: scroll; /* Enable vertical scroll */
+  
+    &::-webkit-scrollbar {
+      display: none; /* Hide scrollbar */
+    }
+  
+    scrollbar-width: none; /* Hide scrollbar for Firefox */
+  }
+  
+  .ordered-item {
+    display: flex;
+    justify-content: space-between; /* Space between image and details */
+    align-items: center;
+    margin-bottom: 10px; /* Space between items */
+  }
+  
+  .ordered-item__image {
+    width: 250px; /* Set width to 250px */
+    height: 250px; /* Set height to 250px */
+    border-radius: 5px; /* Optional: rounded corners for images */
+  }
+  
+  .ordered-item__details {
+    flex-shrink: 1; /* Prevent text from shrinking */
+    margin-right: 10px; /* Space between details and image */
+  }
+  

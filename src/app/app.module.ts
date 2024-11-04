@@ -18,6 +18,7 @@ import { jwtInterceptor } from './interceptors/jwt.interceptor';
 import { AuthService } from './services/auth.service';
 import { AboutComponent } from './components/about/about.component';
 import { ContactComponent } from './components/contact/contact.component';
+import { FormsModule } from '@angular/forms'; // Import FormsModule
 
 
 register();
@@ -41,6 +42,7 @@ register();
     ReactiveFormsModule,
     BrowserAnimationsModule,
     NoopAnimationsModule,
+    FormsModule 
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA

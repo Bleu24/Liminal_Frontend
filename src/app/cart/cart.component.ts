@@ -15,6 +15,10 @@ export class CartComponent implements OnInit, OnDestroy  {
   totalPrice: number = 0;
   private subscriptions: Subscription = new Subscription();
   isBrowser: boolean;
+  totalOrderedPrice: number = 0;
+
+  orderedItems: any[] = []; // Array to hold ordered items
+  isModalOpen: boolean = false; // Control modal visibility
 
   // Declare the images array with image paths based on productId
   images: { [key: number]: string } = {
@@ -57,11 +61,15 @@ export class CartComponent implements OnInit, OnDestroy  {
       );
     }
   }
-
   
 
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
+  }
+
+   // Method to close the modal
+   closeModal(): void {
+    this.isModalOpen = false;
   }
 
 
@@ -123,11 +131,83 @@ export class CartComponent implements OnInit, OnDestroy  {
     }
   }
   
+  removeOrder(): void {
+    // Filter the selected items
+    const selectedItems = this.cartItems.filter(item => item.selected);
+  
+    if (selectedItems.length > 0) {
+      selectedItems.forEach(item => {
+        const username = localStorage.getItem('username') || '';
+        this.cartService.removeFromOrder(username, item.productId).subscribe(() => {
+          console.log(`Order for product ${item.name} removed`);
+          // Optionally, update the cart items or handle UI updates
+          item.selected = false; // Unselect the item
+        });
+      });
+    } else {
+      alert('No items selected to remove from order.');
+    }
+  }
   
   
-
   checkout(): void {
     // Implement checkout logic here
     console.log("Proceeding to checkout...");
   }
+
+
+  orderSelectedItems(): void {
+    const username = localStorage.getItem('username') || ''; // Retrieve username or userId
+  
+    // Filter selected items based on the 'selected' property and create a snapshot for modal display
+    const selectedItems = this.cartItems.filter(item => item.selected);
+    this.orderedItems = JSON.parse(JSON.stringify(selectedItems)); // Create a deep copy to retain original values
+  
+    if (selectedItems.length > 0) {
+      selectedItems.forEach(item => {
+        this.cartService.addToOrder(username, item.productId, item.quantity).subscribe({
+          next: () => {
+            console.log(`Product ${item.name} added to order`);
+            this.updateQuantityCount(item); // Update the quantity and/or label the item as ordered
+  
+            // Remove items from the cart now that they have been ordered
+            this.removeFromCart(item);
+          },
+          complete: () => {
+            // Once all items have been processed, open the modal
+            this.calculateTotalOrderedPrice(); // Recalculate total price for ordered items
+            this.isModalOpen = true;
+          },
+          error: (error) => {
+            console.error(`Failed to add product ${item.name} to order`, error);
+          }
+        });
+      });
+    } else {
+      alert('No items selected for order.');
+    }
+  }
+  
+
+// Method to calculate the total price of ordered items
+calculateTotalOrderedPrice(): void {
+  this.totalOrderedPrice = this.orderedItems.reduce((sum, item) => sum + (item.pricePerItem * item.quantity), 0);
+}
+
+updateQuantityCount(item: any): void {
+  // Check if the item quantity has reached 0, and if so, mark it as ordered
+  if (item.quantity > 1) {
+    item.quantity--; // Decrease the quantity
+  } else {
+    // If the quantity is 1 and it is being ordered, label it as "Ordered"
+    item.quantity = 0;
+    item.label = 'Ordered'; // Add a label or property to indicate it is fully ordered
+  }
+}
+
+
+  isAnyItemSelected(): boolean {
+    return this.cartItems.some(item => item.selected);
+  }
+
 }
